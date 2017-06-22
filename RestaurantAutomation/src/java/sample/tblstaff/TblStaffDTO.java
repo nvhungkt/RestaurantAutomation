@@ -14,21 +14,29 @@ import java.sql.Date;
  */
 public class TblStaffDTO implements Serializable{
     private String id;
+    private String password;
     private String name;
-    private Date joinDate;
-    private String role;
-    private boolean isActive;
+    private String role;    
 
     public TblStaffDTO() {
     }
 
-    public TblStaffDTO(String id, String name, Date joinDate, String role, boolean isActive) {
+    public TblStaffDTO(String id, String password, String name, String role) {
         this.id = id;
-        this.name = name;
-        this.joinDate = joinDate;
+        this.password = password;
+        this.name = name;        
         this.role = role;
-        this.isActive = isActive;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
 
     /**
      * @return the id
@@ -58,19 +66,6 @@ public class TblStaffDTO implements Serializable{
         this.name = name;
     }
 
-    /**
-     * @return the joinDate
-     */
-    public Date getJoinDate() {
-        return joinDate;
-    }
-
-    /**
-     * @param joinDate the joinDate to set
-     */
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
-    }
 
     /**
      * @return the role
@@ -89,15 +84,6 @@ public class TblStaffDTO implements Serializable{
     /**
      * @return the isActive
      */
-    public boolean isIsActive() {
-        return isActive;
-    }
-
-    /**
-     * @param isActive the isActive to set
-     */
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+   
     
 }
