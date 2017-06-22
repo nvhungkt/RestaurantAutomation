@@ -4,9 +4,41 @@
         <servlet-name>MiddleServlet</servlet-name>
         <servlet-class>sample.servlet.MiddleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewOrderListServlet</servlet-name>
+        <servlet-class>sample.servlet.ViewOrderListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>sample.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeMealStatusServlet</servlet-name>
+        <servlet-class>sample.servlet.ChangeMealStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>sample.servlet.LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderListServlet</servlet-name>
+        <url-pattern>/ViewOrderListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeMealStatusServlet</servlet-name>
+        <url-pattern>/ChangeMealStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
