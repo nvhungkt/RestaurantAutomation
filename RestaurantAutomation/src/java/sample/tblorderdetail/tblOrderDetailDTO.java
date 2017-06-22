@@ -6,66 +6,56 @@
 package sample.tblorderdetail;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Time;
+import sample.tblmeal.TblMealDTO;
 
 /**
  *
- * @author Turtle
+ * @author ahhun
  */
-public class tblOrderDetailDTO implements Serializable {
-    private String orderId;
-    private String no;
-    private String mealId;
-    private BigDecimal quantity;
+public class TblOrderDetailDTO implements Serializable{
+    private int no;
+    private TblMealDTO meal;
+    private int quantity;
     private Time takenTime;
     private Time readyTime;
     private String status;
-    private String kitchenId;
+    private String cookID;
 
-    public tblOrderDetailDTO(String orderId, String no, String mealId, BigDecimal quantity, Time takenTime, Time readyTime, String status, String kitchenId) {
-        this.orderId = orderId;
+    public TblOrderDetailDTO() {
+    }
+
+    public TblOrderDetailDTO(int no, TblMealDTO meal, int quantity, Time takenTime, Time readyTime, String status, String cookID) {
         this.no = no;
-        this.mealId = mealId;
+        this.meal = meal;
         this.quantity = quantity;
         this.takenTime = takenTime;
         this.readyTime = readyTime;
         this.status = status;
-        this.kitchenId = kitchenId;
+        this.cookID = cookID;
     }
 
-    public tblOrderDetailDTO() {
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getNo() {
+    public int getNo() {
         return no;
     }
 
-    public void setNo(String no) {
+    public void setNo(int no) {
         this.no = no;
     }
 
-    public String getMealId() {
-        return mealId;
+    public TblMealDTO getMeal() {
+        return meal;
     }
 
-    public void setMealId(String mealId) {
-        this.mealId = mealId;
+    public void setMeal(TblMealDTO meal) {
+        this.meal = meal;
     }
 
-    public BigDecimal getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -93,12 +83,12 @@ public class tblOrderDetailDTO implements Serializable {
         this.status = status;
     }
 
-    public String getKitchenId() {
-        return kitchenId;
+    public String getCookID() {
+        return cookID;
     }
 
-    public void setKitchenId(String kitchenId) {
-        this.kitchenId = kitchenId;
+    public void setCookID(String cookID) {
+        this.cookID = cookID;
     }
-            
+    
 }
