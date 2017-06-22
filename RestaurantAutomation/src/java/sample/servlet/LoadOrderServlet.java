@@ -7,21 +7,28 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.tblstaff.TblStaffDTO;
+import sample.tblorder.TblOrderDAO;
+import sample.tblorder.InputTableNumberError;
+import sample.tblorder.TblOrderDTO;
 
 /**
  *
  * @author Administrator
  */
-public class MiddleServlet extends HttpServlet {
-    private final String loginPage = "login.html";
-    private final String loadOrderServlet = "LoadOrderServlet";
+public class LoadOrderServlet extends HttpServlet {
+    private final String inputTableNumberPage = "inputTableNumber.jsp";
+    private final String getMenuServlet = "GetMenuServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,18 +44,52 @@ public class MiddleServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         HttpSession session = request.getSession();
-        String button = request.getParameter("btAction");
-        TblStaffDTO staff = (TblStaffDTO) session.getAttribute("STAFF");
-        String url = loginPage;
+        String tableNum = request.getParameter("txtInputTableNum");
+        String task = request.getParameter("txtTask");
+        String url = inputTableNumberPage;
+        InputTableNumberError errors = new InputTableNumberError();
+        boolean errorFound = false;
         
         try {
-            if(staff != null) {
-                if(button == null) {
-                    
-                } else if(button.equals("Input table number") && staff.getRole().equals("waiter")) {
-                    url = loadOrderServlet;
+            
+            if(tableNum.trim().length() == 0) {
+                errors.setTableNumberFormatError("Table number not allow empty !!!");
+                errorFound = true;
+            } else {
+                int id = 0;
+                try {
+                    id = Integer.parseInt(tableNum);
+                    if(id <= 0) {
+                        errors.setTableNumberFormatError("Table number must larger than 0 !!!");
+                        errorFound = true;
+                    }
+                } catch (NumberFormatException e) {
+                    errors.setTableNumberFormatError("Table number must be integer !!!");
+                    errorFound = true;
+                    log("LoadOrderServlet NumberFormatException: " + e.getMessage());
+                }
+                if(errorFound) {
+                    session.setAttribute("INPUTTABLENUMBERERROR", errors);
+                } else {
+                    TblOrderDAO dao = new TblOrderDAO();
+                    boolean result = dao.loadOrderByTableNubmer(id);
+                    if(result) {
+                        List<TblOrderDTO> listOrder = dao.getListOrder();
+                        session.setAttribute("ORDER", listOrder.get(0));
+                        if(task.equals("insert order detail")) {
+                            url = getMenuServlet;
+                        }
+                    } else {
+                        errors.setNotFoundError("This table not have order !!!");
+                        session.setAttribute("INPUTTABLENUMBERERROR", errors);
+                    }
                 }
             }
+            
+        } catch (NamingException ex) {
+            log("LoadOrderServlet NamingException: " + ex.getMessage());
+        } catch (SQLException ex) {
+            log("LoadOrderServlet SQLException: " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

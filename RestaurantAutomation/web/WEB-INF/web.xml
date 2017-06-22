@@ -4,9 +4,17 @@
         <servlet-name>MiddleServlet</servlet-name>
         <servlet-class>sample.servlet.MiddleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadOrderServlet</servlet-name>
+        <servlet-class>sample.servlet.LoadOrderServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderServlet</servlet-name>
+        <url-pattern>/LoadOrderServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
