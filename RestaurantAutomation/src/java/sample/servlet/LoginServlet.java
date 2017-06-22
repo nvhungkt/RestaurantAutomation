@@ -7,25 +7,24 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.tblstaff.TblStaffDAO;
 import sample.tblstaff.TblStaffDTO;
-
 
 /**
  *
- * @author Administrator
+ * @author Turtle
  */
-public class MiddleServlet extends HttpServlet {
-    private final String loginPage = "login.html";
-    private final String loadOrderServlet = "LoadOrderServlet";
-    private final String viewOrderListServlet = "ViewOrderListServlet";
-    private final String changeMealStatusServlet = "ChangeMealStatusServlet";
-    private final String loginServlet = "LoginServlet";
+public class LoginServlet extends HttpServlet {    
+    private final String invalidPage = "invalid.html";
+    private final String middleServlet = "MiddleServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,45 +37,27 @@ public class MiddleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();        
-        HttpSession session = request.getSession();
-        String button = request.getParameter("btAction"); 
-        TblStaffDTO staff = (TblStaffDTO) session.getAttribute("STAFF");       
-        String url = loginPage;        
-        try {           
-            if(staff != null) {
-                switch(staff.getRole()) {
-                    case "Waiter":
-                        if(button==null) {
-                            
-                        }                        
-                        else if(button.equals("Input table number")) {
-                            url = loadOrderServlet;
-                        }
-                        break;
-                    case "Kitchen":                        
-                        if(button==null) {
-                            url = viewOrderListServlet;
-                        }
-                        else if(button.equals("Finish") || button.equals("Cook")) {
-                            url = changeMealStatusServlet;
-                        }
-                        else {
-                            
-                        }
-                        break;
-                        //defaul nay de test, nho xoa
-                    default:
-                        url = "LogoutServlet";
-                }                                
+        PrintWriter out = response.getWriter();
+        String id = request.getParameter("txtId");
+        String password = request.getParameter("txtPassword");
+        String url = invalidPage;
+        try {
+            TblStaffDAO dao = new TblStaffDAO();
+            TblStaffDTO staff = dao.login(id, password);
+            if(staff!=null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("STAFF", staff);                
+                url = middleServlet;                   
             }
-            else if(button != null) {
-                url = loginServlet;
-            }            
-            
-        } finally {            
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        }
+        catch(SQLException ex) {
+            log("LoginServlet_ SQL error " + ex.getMessage());
+        }
+        catch(NamingException ex) {
+            log("LoginServlet_ Datasource error " + ex.getMessage());
+        }
+        finally {
+            response.sendRedirect(url);
             out.close();
         }
     }

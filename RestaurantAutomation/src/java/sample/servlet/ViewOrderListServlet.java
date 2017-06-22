@@ -7,25 +7,25 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.tblstaff.TblStaffDTO;
-
+import sample.tblorderdetail.OrderDetail;
+import sample.tblorderdetail.TblOrderDetailDAO;
 
 /**
  *
- * @author Administrator
+ * @author Turtle
  */
-public class MiddleServlet extends HttpServlet {
-    private final String loginPage = "login.html";
-    private final String loadOrderServlet = "LoadOrderServlet";
-    private final String viewOrderListServlet = "ViewOrderListServlet";
-    private final String changeMealStatusServlet = "ChangeMealStatusServlet";
-    private final String loginServlet = "LoginServlet";
+public class ViewOrderListServlet extends HttpServlet {
+    private final String viewOrderListPage = "viewOrderList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,43 +38,22 @@ public class MiddleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();        
+        PrintWriter out = response.getWriter();
+        String url = viewOrderListPage;
+        TblOrderDetailDAO dao = new TblOrderDetailDAO();
         HttpSession session = request.getSession();
-        String button = request.getParameter("btAction"); 
-        TblStaffDTO staff = (TblStaffDTO) session.getAttribute("STAFF");       
-        String url = loginPage;        
-        try {           
-            if(staff != null) {
-                switch(staff.getRole()) {
-                    case "Waiter":
-                        if(button==null) {
-                            
-                        }                        
-                        else if(button.equals("Input table number")) {
-                            url = loadOrderServlet;
-                        }
-                        break;
-                    case "Kitchen":                        
-                        if(button==null) {
-                            url = viewOrderListServlet;
-                        }
-                        else if(button.equals("Finish") || button.equals("Cook")) {
-                            url = changeMealStatusServlet;
-                        }
-                        else {
-                            
-                        }
-                        break;
-                        //defaul nay de test, nho xoa
-                    default:
-                        url = "LogoutServlet";
-                }                                
-            }
-            else if(button != null) {
-                url = loginServlet;
-            }            
-            
-        } finally {            
+        try {            
+            dao.getList();
+            List<OrderDetail> orderList = dao.getOrderList();
+            session.setAttribute("RESULT", orderList);
+        }
+        catch(SQLException ex) {
+            log("ViewOrderListServlet_ SQL error " + ex.getMessage());
+        }
+        catch(NamingException ex) {
+            log("ViewOrderListServlet_ Datasource error " + ex.getMessage());
+        }
+        finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
