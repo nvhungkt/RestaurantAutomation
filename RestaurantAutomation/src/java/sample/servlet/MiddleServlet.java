@@ -58,8 +58,10 @@ public class MiddleServlet extends HttpServlet {
                     else url = viewTableServlet;
                 } else if(button.equals("Update order") && staff.getRole().equals("waiter")) {
                     url = updateOrderDetailServlet;
+                } else if(button.equals("Remove order") && staff.getRole().equals("waiter")) {
+                    url = updateOrderDetailServlet;
                 } else if(button.equals("View editable order") && staff.getRole().equals("waiter")) {
-                    url = viewEditableOrderDetailsPage;
+                    url = loadOrderServlet;
                 } else if(button.equals("Add order") && staff.getRole().equals("waiter")) {
                     url = addOrderDetailServlet;
                 } else if(button.equals("Input table number") && staff.getRole().equals("waiter")) {

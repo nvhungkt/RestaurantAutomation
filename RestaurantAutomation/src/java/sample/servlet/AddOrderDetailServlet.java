@@ -74,16 +74,14 @@ public class AddOrderDetailServlet extends HttpServlet {
                     Time takenTime = new Time(System.currentTimeMillis());
                     Time readyTime = null;
                     String cookID = null;
-                    String status = "PENDING";
+                    String status = "ordered";
                     
                     TblOrderDetailDTO oDetail = 
                             new TblOrderDetailDTO(no, meal, quantity, takenTime, readyTime, status, cookID);
                     // add to DB first
                     TblOrderDetailDAO oDDao = new TblOrderDetailDAO();
                     boolean result = oDDao.insertOrderDetail(oDetail, orderID);
-                    System.out.println("ngoai");
                     if(result) {
-                        System.out.println("trong");
                         // remove all list oD in order and reload from DB
                         order.setOrderDetails(null);
                         oDDao.loadOrderDetailByOrderID(orderID);

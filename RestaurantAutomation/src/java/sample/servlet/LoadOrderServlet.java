@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,8 @@ import sample.tblorder.TblOrderDTO;
  *
  * @author Administrator
  */
-public class UpdateOrderDetailServlet extends HttpServlet {
+public class LoadOrderServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,18 +40,20 @@ public class UpdateOrderDetailServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber"));
-        String[] selectedQuantities = request.getParameterValues("txtEditableQuantity");
-        String url = "";
+        
         try {
             TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
-            for (int i = 0; i < 10; i++) {
-                
-            }
+            if(order != null)
+                System.out.println("have order");
+            else System.out.println("no order");
+            request.setAttribute("ORDER", order);
         } catch (NamingException ex) {
-            log("UpdateOrderDetailServlet NamingException: " + ex.getMessage());
+            log("LoadOrderServlet NamingException" + ex.getMessage());
         } catch (SQLException ex) {
-            log("UpdateOrderDetailServlet SQLException: " + ex.getMessage());
+            log("LoadOrderServlet SQLException" + ex.getMessage());
         } finally {
+            RequestDispatcher rd = request.getRequestDispatcher("viewEditableOrderDetails.jsp");
+            rd.forward(request, response);
             out.close();
         }
     }
