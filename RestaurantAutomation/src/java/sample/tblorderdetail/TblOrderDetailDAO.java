@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -198,7 +198,8 @@ public class TblOrderDetailDAO implements Serializable {
             String sql = "SELECT o.orderID AS OrderID, o.no, m.name AS MealName,\n" +
                     "m.unit AS MealUnit,  o.quantity, c.name AS Category, o.takenTime, o.status\n" +
                     "FROM tblOrderDetail o, tblMeal m, tblCategory c\n" +
-                    "WHERE o.mealID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')";
+                    "WHERE o.mealID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')\n" +
+		    "ORDER BY o.takenTime";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             if (orderList == null) {
