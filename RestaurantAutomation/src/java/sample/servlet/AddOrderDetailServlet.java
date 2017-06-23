@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sample.tblmeal.TblMealDAO;
 import sample.tblmeal.TblMealDTO;
+import sample.tblorder.TblOrderDAO;
 import sample.tblorder.TblOrderDTO;
 import sample.tblorderdetail.TblOrderDetailDAO;
 import sample.tblorderdetail.TblOrderDetailDTO;
@@ -43,13 +44,16 @@ public class AddOrderDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
+//        TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
+        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber"));
+        
         String[] selectedIDs = request.getParameterValues("txtMealID");
         String[] quantitySelectedMeals = request.getParameterValues("txtQuantity");
         String url = "MiddleServlet?btAction=Take Order&txtTableNumber="
                 + request.getParameter("txtTableNumber");
         
         try {
+            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
             for (int i = 0; i < quantitySelectedMeals.length; i++) {
                 int quantity = 0;
                 try {
@@ -59,7 +63,10 @@ public class AddOrderDetailServlet extends HttpServlet {
                 }
                 if(quantity > 0) {
                     String orderID = order.getId();
-                    int no = order.getOrderDetails().size() + 1;
+                    int no;
+                    if(order.getOrderDetails() == null) {
+                        no = 1;
+                    } else no = order.getOrderDetails().size() + 1;
                     String mealID = selectedIDs[i];
                     TblMealDAO dao = new TblMealDAO();
                     TblMealDTO meal = dao.loadMeal(mealID);
@@ -74,7 +81,9 @@ public class AddOrderDetailServlet extends HttpServlet {
                     // add to DB first
                     TblOrderDetailDAO oDDao = new TblOrderDetailDAO();
                     boolean result = oDDao.insertOrderDetail(oDetail, orderID);
+                    System.out.println("ngoai");
                     if(result) {
+                        System.out.println("trong");
                         // remove all list oD in order and reload from DB
                         order.setOrderDetails(null);
                         oDDao.loadOrderDetailByOrderID(orderID);

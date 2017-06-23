@@ -80,13 +80,13 @@ public class TblMealDAO implements Serializable{
         try {            
             con = DBUtilities.makeConnection();    
             if(con != null) {
-                String sql = "select m.id, m.name, m.unit, p.price, c.name " +
-                             "from tblMeal m, tblPrice p, tblCategory " +
+                String sql = "select m.id, m.name, m.unit, p.price, c.name as category " +
+                             "from tblMeal m, tblPrice p, tblCategory c " +
                              "where m.id = p.mealID and m.cateID = c.id and m.id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, mealID);
                 
-                rs = stm.executeQuery(sql);
+                rs = stm.executeQuery();
                 if(rs.next()) {
                     String id = rs.getString("id");
                     String name = rs.getString("name");

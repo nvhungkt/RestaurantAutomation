@@ -32,6 +32,7 @@ public class MiddleServlet extends HttpServlet {
     private final String changeMealStatusServlet = "ChangeMealStatusServlet";
     private final String loginServlet = "LoginServlet";
     private final String viewTableServlet = "ViewTableServlet";
+    private final String viewEditableOrderDetailsPage = "viewEditableOrderDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,6 +58,8 @@ public class MiddleServlet extends HttpServlet {
                     else url = viewTableServlet;
                 } else if(button.equals("Update order") && staff.getRole().equals("waiter")) {
                     url = updateOrderDetailServlet;
+                } else if(button.equals("View editable order") && staff.getRole().equals("waiter")) {
+                    url = viewEditableOrderDetailsPage;
                 } else if(button.equals("Add order") && staff.getRole().equals("waiter")) {
                     url = addOrderDetailServlet;
                 } else if(button.equals("Input table number") && staff.getRole().equals("waiter")) {

@@ -18,7 +18,6 @@ import sample.tblorder.TblOrderDTO;
  * @author Administrator
  */
 public class UpdateOrderDetailServlet extends HttpServlet {
-    private final String updateCurOrderDetailsPage = "updateCurOrderDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,7 +33,7 @@ public class UpdateOrderDetailServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
-        String url = updateCurOrderDetailsPage;
+        String url = "";
         try {
             
         } finally {
