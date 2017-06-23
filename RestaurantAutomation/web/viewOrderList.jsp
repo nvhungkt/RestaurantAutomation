@@ -16,11 +16,7 @@
         Welcome, ${sessionScope.STAFF.name}</br>
         <a href="LogoutServlet">Log out</a></br>
         
-        <h2>Here is order list</h2>
-        <form action="MiddleServlet">
-            <input type="submit" value="Refresh" name="btAction" />
-        </form>   
-        </br>
+        <h2>Here is order list</h2>         
         <c:if test="${not empty sessionScope.RESULT}">
             <table border="1">
                 <thead>
