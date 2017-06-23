@@ -9,19 +9,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Menu</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
-        Welcome, ${sessionScope.STAFF.name}<br/>
-        <a href="LogoutServlet">Log out</a><br/>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Restaurant Automation</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Welcome, ${sessionScope.STAFF.name}</a></li>
+                    <li><a href="LogoutServlet">Log out</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <h1>Choose meal</h1>
         <c:set var="menu" value="${requestScope.MENU}"/>
         <c:if test="${not empty menu}">
             <form action="MiddleServlet">
                 <input type="hidden" value="${param.txtTableNumber}" name="txtTableNumber"/>
-                <input type="submit" value="Update order" name="btAction" />
-				<input type="submit" value="View editable order" name="btAction" />
+                <input type="submit" value="View editable order" name="btAction" />
                 <input type="submit" value="Add order" name="btAction" /><br/>
                 <table border="1">
                     <thead>

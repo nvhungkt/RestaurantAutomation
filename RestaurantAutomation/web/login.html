@@ -9,14 +9,32 @@ and open the template in the editor.
         <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>Login Page</h1>
-        <form action="MiddleServlet" method="POST">
-            ID: <input type="text" name="txtId" value="" /><br/>
-            Password: <input type="password" name="txtPassword" value="" /> <br/>
-            <input type="submit" value="Login" name="btAction" />
-            <input type="reset" value="Reset" />
-        </form>
+        <div class="jumbotron text-center">
+            <h1>Restaurant Automation</h1>
+            <p>For staff and manager!</p>
+        </div>
+        <div class="container">
+            
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2>Login Page</h2></div>
+                <div class="panel-body">
+                    
+                    <form action="MiddleServlet" method="POST">
+                        <label for="id">ID:</label>
+                        <input type="text" name="txtId" value="" id="id" class="form-control"/><br/>
+                        <label for="pwd">Password:</label>
+                        <input type="password" name="txtPassword" value="" id="pwd" class="form-control"/> <br/>
+                        <input type="reset" value="Reset" class="btn"/>
+                        <input type="submit" value="Login" name="btAction" class="btn btn-default"/>
+                    </form>
+                    
+                </div>
+            </div>
+            
+        </div>
     </body>
 </html>

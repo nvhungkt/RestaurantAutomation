@@ -195,14 +195,10 @@ public class TblOrderDetailDAO implements Serializable {
         ResultSet rs = null;
         try {
             con = DBUtilities.makeConnection();
-            String sql = "SELECT o.orderID AS OrderID, o.no, m.name AS MealName, "
-                    + "m.unit AS MealUnit,  o.quantity, c.name AS Category, o.takenTime, o.status "
-                    + "FROM tblOrderDetail o, "
-                    + "(SELECT * "
-                    + "FROM tblMeal) m, "
-                    + "(SELECT * "
-                    + "FROM tblCategory) c "
-                    + "WHERE o.cookID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')";
+            String sql = "SELECT o.orderID AS OrderID, o.no, m.name AS MealName,\n" +
+                    "m.unit AS MealUnit,  o.quantity, c.name AS Category, o.takenTime, o.status\n" +
+                    "FROM tblOrderDetail o, tblMeal m, tblCategory c\n" +
+                    "WHERE o.mealID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             if (orderList == null) {
