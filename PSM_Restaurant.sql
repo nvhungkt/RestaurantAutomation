@@ -44,6 +44,47 @@ AS
 	WHERE isActive = 1 AND [status] <> 'occupied'
 GO
 
+--take table
+IF OBJECT_ID('takeTable','P') IS NOT NULL
+	DROP PROCEDURE takeTable
+GO
+
+CREATE PROCEDURE takeTable
+	@tableNumber INT
+AS 
+	DECLARE @tblstatus VARCHAR(10)
+	SELECT @tblstatus = [status]
+	FROM tblTable
+	WHERE number = @tableNumber
+	
+	IF (@tblstatus = 'cleaned')
+		UPDATE tblTable SET [status] = 'occupied' WHERE number = @tableNumber
+GO
+
+--reser table
+IF OBJECT_ID('resetTable','P') IS NOT NULL
+	DROP PROCEDURE resetTable
+GO
+
+CREATE PROCEDURE resetTable
+	@tableNumber INT
+AS 
+	DECLARE @tblstatus VARCHAR(10)
+	SELECT @tblstatus = [status]
+	FROM tblTable
+	WHERE number = @tableNumber
+	
+	DECLARE @orderID VARCHAR(50)
+	SET @orderID = 'null'
+	SELECT @orderID = id
+	FROM tblOrder
+	WHERE tableNumber = @tableNumber AND leavingTime IS NULL
+	
+	IF (@tblstatus = 'occupied' AND @orderID = 'null')
+		UPDATE tblTable SET [status] = 'cleaned' WHERE number = @tableNumber
+GO
+	
+
 --for waiter
 --
 --create new order
@@ -87,8 +128,6 @@ AS
 		SELECT @arriveTime = GETDATE()
 		
 		INSERT INTO tblOrder VALUES(@currentID, @tableNumber, @waiterID, @customerName, @date, @arriveTime, NULL)
-		
-		UPDATE tblTable SET [status] = 'occupied' WHERE number = @tableNumber
 	END
 GO
 
