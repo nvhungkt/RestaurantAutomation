@@ -69,7 +69,7 @@ public class MiddleServlet extends HttpServlet {
                     url = useTableServlet;
                 } else if (button.equals("Clean Table")) {
                     
-                } else if(button.equals("Finish") || button.equals("cook")) {
+                } else if(button.equals("Finish") || button.equals("Cook")) {
                     url = changeMealStatusServlet;
                 }                         
             }
