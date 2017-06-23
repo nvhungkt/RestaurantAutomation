@@ -1,4 +1,4 @@
-﻿/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -17,6 +17,8 @@ import java.util.List;
 import javax.naming.NamingException;
 import sample.tblmeal.TblMealDAO;
 import sample.tblmeal.TblMealDTO;
+import sample.tblorderdetail.OrderDetail;
+import sample.tblorderdetail.TblOrderDetailDTO;
 import sample.utils.DBUtilities;
 
 /**
