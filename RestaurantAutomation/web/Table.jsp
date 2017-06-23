@@ -24,6 +24,7 @@
             </thead>
             <tbody>
                 <c:set var="tables" value="${requestScope.TABLES}"/>
+                <c:set var="staff" value="${sessionScope.STAFF}"/>
                 <c:forEach var="table" items="${tables}">
                 <form action="MiddleServlet">
                     <input type="hidden" name="txtTableNumber" value="${table.number}" />

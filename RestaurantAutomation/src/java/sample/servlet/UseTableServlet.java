@@ -7,17 +7,26 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sample.tblstaff.TblStaffDTO;
+import sample.utils.DBUtilities;
 
 /**
  *
  * @author ahhun
  */
 public class UseTableServlet extends HttpServlet {
-
+    private Connection con;
+    private CallableStatement stm;
+    private final String viewTableServlet = "ViewTableServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,9 +39,34 @@ public class UseTableServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        TblStaffDTO staff = (TblStaffDTO) request.getSession(false).getAttribute("STAFF");
+        
+        try {
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                stm = con.prepareCall("EXEC createNewOrder ?, ?, ?");
+                stm.setInt(1, Integer.parseInt(request.getParameter("txtTableNumber").trim()));
+                stm.setString(2, staff.getId());
+                stm.setNull(3, Types.NVARCHAR);
+                stm.execute();
+            }
             
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (stm != null) stm.close();
+                if (con != null) con.close();
+                response.sendRedirect(viewTableServlet);
+                out.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
+               
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -54,6 +54,7 @@ public class TblOrderDAO implements Serializable{
                             + "WHERE orderID = ? AND tblOrderDetail.mealID = tblMeal.id AND "
                             + "tblMeal.id = tblPrice.mealID AND tblMeal.cateID = tblCategory.id "
                             + "AND toDate IS NULL");
+                    stm.setString(1, orderID);
                     rs = stm.executeQuery();
                     while (rs.next()) {
                         int no = rs.getInt("no");

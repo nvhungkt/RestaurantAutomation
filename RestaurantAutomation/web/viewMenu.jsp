@@ -30,6 +30,7 @@
                 </thead>
                     <tbody>
                         <c:forEach var="dto" items="${menu}">
+                            <tr>
                             <td>
                                 ${dto.name}
                                 <input type="hidden" name="txtMealID" value="${dto.id}" />
@@ -40,6 +41,7 @@
                                 <input type="text" name="txtQuantity" value="0" />
                             </td>
                             <td>${dto.price}</td>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>

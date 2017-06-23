@@ -46,7 +46,7 @@ public class AddOrderDetailServlet extends HttpServlet {
         TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
         String[] selectedIDs = request.getParameterValues("txtMealID");
         String[] quantitySelectedMeals = request.getParameterValues("txtQuantity");
-        String url = "MiddleServlet?btAction=Add+order";
+        String url = "MiddleServlet?btAction=Take Order";
         
         try {
             for (int i = 0; i < quantitySelectedMeals.length; i++) {

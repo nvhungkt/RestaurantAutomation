@@ -21,7 +21,7 @@ import sample.tblorder.TblOrderDTO;
  * @author ahhun
  */
 public class TakeOrderServlet extends HttpServlet {
-    private final String viewMenu = "viewMenu.jsp";
+    private final String viewMenuServlet = "ViewMenuServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +45,7 @@ public class TakeOrderServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            request.getRequestDispatcher(viewMenu).forward(request, response);
+            request.getRequestDispatcher(viewMenuServlet).forward(request, response);
             out.close();
         }
     }
