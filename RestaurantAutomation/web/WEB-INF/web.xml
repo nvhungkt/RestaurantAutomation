@@ -5,6 +5,18 @@
         <servlet-class>sample.servlet.MiddleServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ViewMenuServlet</servlet-name>
+        <servlet-class>sample.servlet.ViewMenuServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddOrderDetailServlet</servlet-name>
+        <servlet-class>sample.servlet.AddOrderDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateOrderDetailServlet</servlet-name>
+        <servlet-class>sample.servlet.UpdateOrderDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TakeOrderServlet</servlet-name>
         <servlet-class>sample.servlet.TakeOrderServlet</servlet-class>
     </servlet>
@@ -71,6 +83,18 @@
     <servlet-mapping>
         <servlet-name>ViewTableServlet</servlet-name>
         <url-pattern>/ViewTableServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewMenuServlet</servlet-name>
+        <url-pattern>/ViewMenuServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddOrderDetailServlet</servlet-name>
+        <url-pattern>/AddOrderDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderDetailServlet</servlet-name>
+        <url-pattern>/UpdateOrderDetailServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

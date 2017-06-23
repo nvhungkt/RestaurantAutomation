@@ -7,31 +7,27 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.tblstaff.TblStaffDTO;
-
+import sample.tblmeal.TblMealDAO;
+import sample.tblmeal.TblMealDTO;
+import sample.tblorder.TblOrderDTO;
 
 /**
  *
  * @author Administrator
  */
-public class MiddleServlet extends HttpServlet {
-    private final String loginPage = "login.html";
-    private final String loadOrderServlet = "LoadOrderServlet";
-    private final String updateOrderDetailServlet = "UpdateOrderDetailServlet";
-    private final String addOrderDetailServlet = "AddOrderDetailServlet";
-    private final String takeOrderServlet = "TakeOrderServlet";
-    private final String checkOutServlet = "CheckOutServlet";
-    private final String useTableServlet = "UseTableServlet";
-    private final String viewOrderListServlet = "ViewOrderListServlet";
-    private final String changeMealStatusServlet = "ChangeMealStatusServlet";
-    private final String loginServlet = "LoginServlet";
-    private final String viewTableServlet = "ViewTableServlet";
+public class ViewMenuServlet extends HttpServlet {
+    private final String viewMenuPage = "viewMenu.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,40 +40,20 @@ public class MiddleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();        
-        HttpSession session = request.getSession();
-        String button = request.getParameter("btAction"); 
-        TblStaffDTO staff = (TblStaffDTO) session.getAttribute("STAFF");       
-        String url = loginPage;        
-        try {           
-            if(staff != null) {
-                if(button == null) {
-                    if (staff.getRole().equals("cook"))
-                        url = viewOrderListServlet;
-                    else url = viewTableServlet;
-                } else if(button.equals("Update order") && staff.getRole().equals("waiter")) {
-                    url = updateOrderDetailServlet;
-                } else if(button.equals("Add order") && staff.getRole().equals("waiter")) {
-                    url = addOrderDetailServlet;
-                } else if(button.equals("Input table number") && staff.getRole().equals("waiter")) {
-                    url = loadOrderServlet;
-                } else if (button.equals("Take Order")) {
-                    url = takeOrderServlet;
-                } else if (button.equals("Check Out")) {
-                    url = checkOutServlet;
-                } else if (button.equals("Use Table")) {
-                    url = useTableServlet;
-                } else if (button.equals("Clean Table")) {
-                    
-                } else if(button.equals("Finish") || button.equals("cook")) {
-                    url = changeMealStatusServlet;
-                }                         
-            }
-            else if(button != null) {
-                url = loginServlet;
-            }            
-            
-        } finally {            
+        PrintWriter out = response.getWriter();
+        
+        TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
+        String url = viewMenuPage;
+        try {
+            TblMealDAO dao = new TblMealDAO();
+            dao.loadAvailableMeal();
+            List<TblMealDTO> listMeal = dao.getListMeal();
+            request.setAttribute("MENU", listMeal);
+        } catch (NamingException ex) {
+            log("ViewMenuServlet NamingException: " + ex.getMessage());
+        } catch (SQLException ex) {
+            log("ViewMenuServlet SQLException: " + ex.getMessage());
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
