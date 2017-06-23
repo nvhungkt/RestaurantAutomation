@@ -38,13 +38,13 @@ public class ChangeMealStatusServlet extends HttpServlet {
         PrintWriter out = response.getWriter();        
         String button = request.getParameter("btAction");
         String orderId = request.getParameter("txtOrderId");
-        String orderNo = request.getParameter("txtOrderNo");
+        int orderNo = Integer.parseInt(request.getParameter("txtOrderNo"));
         String url = middleServlet;
         try {
             TblOrderDetailDAO dao = new TblOrderDetailDAO();
             String status;
-            if(button.equals("Finish")) status = "COOKED";
-            else status = "COOKING";
+            if(button.equals("Finish")) status = "ready";
+            else status = "cooking";
             HttpSession session = request.getSession();
             TblStaffDTO staff = (TblStaffDTO) session.getAttribute("STAFF");
             int result = dao.changeStatus(orderId, orderNo, status, staff.getId());         
