@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -37,14 +37,14 @@ public class TblOrderDetailDAO implements Serializable{
         return orderList;
     }
     
-    public int changeStatus(String orderId, String no, String newStatus, String cookId) throws SQLException, NamingException {
+    public int changeStatus(String orderId, int no, String newStatus, String cookId) throws SQLException, NamingException {
         Connection con =null;
         PreparedStatement stm = null;        
         try {            
             con = DBUtilities.makeConnection();    
             String sql;
             Time time =null;
-            if(newStatus.equals("COOKED")) {
+            if(newStatus.equals("ready")) {
                 time = new Time(System.currentTimeMillis());                
             }
             sql = "UPDATE tblOrderDetail SET status = ?, cookID = ?, readyTime = ? WHERE orderID = ? AND no = ?";
@@ -53,7 +53,7 @@ public class TblOrderDetailDAO implements Serializable{
             stm.setString(2, cookId);
             stm.setTime(3, time);
             stm.setString(4, orderId);
-            stm.setString(5, no);
+            stm.setInt(5, no);
             return stm.executeUpdate();
             
         }
@@ -205,7 +205,7 @@ public class TblOrderDetailDAO implements Serializable{
                         "FROM tblMeal) m, " +
                         "(SELECT * " +
                         "FROM tblCategory) c " +
-                        "WHERE o.cookID = m.id AND c.id = m.cateID AND o.status NOT LIKE 'COOKED'";
+                        "WHERE o.cookID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             if(orderList==null) {
@@ -213,7 +213,7 @@ public class TblOrderDetailDAO implements Serializable{
             }
            while(rs.next()) {
                String orderId = rs.getString("OrderID");
-               String no = rs.getString("no");
+               int no = rs.getInt("no");
                String mealName = rs.getString("MealName");
                String mealUnit = rs.getString("MealUnit");
                BigDecimal quantity = rs.getBigDecimal("quantity");
