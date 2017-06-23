@@ -502,7 +502,7 @@ AS
 GO
 
 --Get Revenue Per Day
-IF OBJECT_ID('getRevenuePerDay ', 'P') IS NOT NULL
+IF OBJECT_ID('getRevenuePerDay', 'P') IS NOT NULL
 	DROP PROCEDURE getRevenuePerDay 
 GO
 CREATE PROCEDURE getRevenuePerDay
@@ -540,7 +540,7 @@ GO
 
 
 --Get most popular item
-IF OBJECT_ID('getMostPopularItem ', 'P') IS NOT NULL
+IF OBJECT_ID('getMostPopularItem', 'P') IS NOT NULL
 	DROP PROCEDURE getMostPopularItem 
 GO
 CREATE PROCEDURE getMostPopularItem
@@ -560,7 +560,7 @@ AS
 GO
 
 --get busboy table
-IF OBJECT_ID('getBusboyEfficiency ', 'P') IS NOT NULL
+IF OBJECT_ID('getBusboyEfficiency', 'P') IS NOT NULL
 	DROP PROCEDURE getBusboyEfficiency 
 GO
 CREATE PROCEDURE getBusboyEfficiency
@@ -575,7 +575,7 @@ AS
 GO
 
 --get waiter orders
-IF OBJECT_ID('getWaiterEfficiency ', 'P') IS NOT NULL
+IF OBJECT_ID('getWaiterEfficiency', 'P') IS NOT NULL
 	DROP PROCEDURE getWaiterEfficiency 
 GO
 CREATE PROCEDURE getWaiterEfficiency
@@ -590,7 +590,7 @@ AS
 GO
 
 --get cook meals
-IF OBJECT_ID('getKitchenEfficiency ', 'P') IS NOT NULL
+IF OBJECT_ID('getKitchenEfficiency', 'P') IS NOT NULL
 	DROP PROCEDURE getKitchenEfficiency 
 GO
 CREATE PROCEDURE getKitchenEfficiency
@@ -605,7 +605,7 @@ AS
 GO
 
 --avg turn around time
-IF OBJECT_ID('getAvgTurnAroundTime ', 'P') IS NOT NULL
+IF OBJECT_ID('getAvgTurnAroundTime', 'P') IS NOT NULL
 	DROP PROCEDURE getAvgTurnAroundTime 
 GO
 CREATE PROCEDURE getAvgTurnAroundTime
@@ -617,7 +617,7 @@ AS
 GO
 
 --avg preparation time
-IF OBJECT_ID('getAvgPreparationTime ', 'P') IS NOT NULL
+IF OBJECT_ID('getAvgPreparationTime', 'P') IS NOT NULL
 	DROP PROCEDURE getAvgPreparationTime 
 GO
 CREATE PROCEDURE getAvgPreparationTime
@@ -627,3 +627,14 @@ AS
 		(SELECT DATEDIFF(MI, takenTime, readyTime) AS [minutes]
 		FROM tblOrderDetail) r
 GO
+
+--ADDITION
+--
+--
+--
+--take menu
+IF OBJECT_ID('getMenu', 'P') IS NOT NULL
+	DROP PROCEDURE getMenu 
+GO
+CREATE PROCEDURE getMenu
+AS
