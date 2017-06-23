@@ -35,14 +35,22 @@
                         <td>${table.capacity}</td>
                         <td>${table.status}</td>
                         <c:if test="${staff.role eq 'waiter'}">
-                            <td><input type="submit" value="Take Order" name="btAction" /></td>
-                            <td><input type="submit" value="Check Out" name="btAction" /></td>
+                            <td><input type="submit" value="Take Order"
+                                       <c:if test="${table.status ne 'occupied'}">disabled="disabled"</c:if>
+                                       name="btAction" /></td>
+                            <td><input type="submit" value="Check Out"
+                                       <c:if test="${table.status ne 'occupied'}">disabled="disabled"</c:if>
+                                       name="btAction" /></td>
                         </c:if>
                         <c:if test="${staff.role eq 'host'}">
-                            <td><input type="submit" value="Use Table" name="btAction" /></td>
+                            <td><input type="submit" value="Use Table"
+                                       <c:if test="${table.status ne 'cleaned'}">disabled="disabled"</c:if>
+                                       name="btAction" /></td>
                         </c:if>
                         <c:if test="${staff.role eq 'busboy'}">
-                            <td><input type="submit" value="Clean Table" name="btAction" /></td>
+                            <td><input type="submit" value="Clean Table"
+                                       <c:if test="${table.status ne 'dirty'}">disabled="disabled"</c:if>
+                                       name="btAction" /></td>
                         </c:if>
                     </tr>
                 </form>

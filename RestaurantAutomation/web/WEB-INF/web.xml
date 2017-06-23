@@ -48,6 +48,10 @@
         <servlet-name>ViewTableServlet</servlet-name>
         <servlet-class>sample.servlet.ViewTableServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CleanTableServlet</servlet-name>
+        <servlet-class>sample.servlet.CleanTableServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>UpdateOrderDetailServlet</servlet-name>
         <url-pattern>/UpdateOrderDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CleanTableServlet</servlet-name>
+        <url-pattern>/CleanTableServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

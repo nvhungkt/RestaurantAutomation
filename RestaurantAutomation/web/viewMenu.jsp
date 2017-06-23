@@ -19,6 +19,7 @@
         <c:set var="menu" value="${requestScope.MENU}"/>
         <c:if test="${not empty menu}">
             <form action="MiddleServlet">
+                <input type="hidden" value="${param.txtTableNumber}" name="txtTableNumber"/>
                 <input type="submit" value="Update order" name="btAction" />
                 <input type="submit" value="Add order" name="btAction" /><br/>
                 <table border="1">
