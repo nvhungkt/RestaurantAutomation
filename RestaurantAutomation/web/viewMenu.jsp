@@ -21,6 +21,7 @@
             <form action="MiddleServlet">
                 <input type="hidden" value="${param.txtTableNumber}" name="txtTableNumber"/>
                 <input type="submit" value="Update order" name="btAction" />
+				<input type="submit" value="View editable order" name="btAction" />
                 <input type="submit" value="Add order" name="btAction" /><br/>
                 <table border="1">
                     <thead>
