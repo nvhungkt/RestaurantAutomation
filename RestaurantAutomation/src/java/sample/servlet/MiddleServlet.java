@@ -53,7 +53,9 @@ public class MiddleServlet extends HttpServlet {
         try {           
             if(staff != null) {
                 if(button == null) {
-                    if (staff.getRole().equals("cook"))
+                    if (staff.getRole().equals("manager"))
+                        url = "manager.jsp";
+                    else if (staff.getRole().equals("cook"))
                         url = viewOrderListServlet;
                     else url = viewTableServlet;
                 } else if(button.equals("Update order") && staff.getRole().equals("waiter")) {
@@ -76,7 +78,19 @@ public class MiddleServlet extends HttpServlet {
                     
                 } else if(button.equals("Finish") || button.equals("Cook")) {
                     url = changeMealStatusServlet;
-                }                         
+                }
+                
+                if (staff.getRole().equals("manager")) {
+                    if (button == null) {
+                        
+                    } else if (button.equals("ManageTable")) {
+                        url = "ManageTableServlet";
+                    } else if (button.equals("ManageMeal")) {
+                        url = "mealManagement.jsp";
+                    } else if (button.equals("report")) {
+                        url = "report.jsp";
+                    }
+                }
             }
             else if(button != null) {
                 url = loginServlet;
