@@ -13,9 +13,14 @@
         <title>View Orders</title>
     </head>
     <body>
-        Welcome, ${sessionScope.STAFF.name}<br/>
-        <a href="LogoutServlet">Log out</a><br/>
-        <h2>Here is order list</h2></br>
+        Welcome, ${sessionScope.STAFF.name}</br>
+        <a href="LogoutServlet">Log out</a></br>
+        
+        <h2>Here is order list</h2>
+        <form action="MiddleServlet">
+            <input type="submit" value="Refresh" name="btAction" />
+        </form>   
+        </br>
         <c:if test="${not empty sessionScope.RESULT}">
             <table border="1">
                 <thead>
@@ -49,12 +54,12 @@
                         <td>${order.category}</td>
                         <td>${order.takenTime}</td>
                         <td>${order.status}</td>
-                        <c:if test="${order.status eq 'COOKING'}">
+                        <c:if test="${order.status eq 'cooking'}">
                             <td>
                                 <input type="submit" value="Finish" name="btAction" />
                             </td>
                         </c:if>
-                        <c:if test="${order.status eq 'UNCOOKED'}">
+                        <c:if test="${order.status eq 'ordered'}">
                             <td>
                                 <input type="submit" value="Cook" name="btAction" />
                             </td>
@@ -68,5 +73,6 @@
 <c:if test="${empty sessionScope.RESULT}">
     <h2>All orders were cooked</h2>
 </c:if>
+
 </body>
 </html>
