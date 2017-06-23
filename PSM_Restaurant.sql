@@ -394,7 +394,7 @@ AS
 	END
 	ELSE IF @@FETCH_STATUS = 0
 	BEGIN
-		UPDATE tblTable SET capacity = @capacity WHERE number = @tableNumber
+		UPDATE tblTable SET capacity = @capacity, isActive = 1 WHERE number = @tableNumber
 	END
 	CLOSE [table]
 	DEALLOCATE [table]
