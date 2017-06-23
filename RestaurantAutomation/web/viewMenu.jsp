@@ -13,6 +13,8 @@
         <title>Menu</title>
     </head>
     <body>
+        Welcome, ${sessionScope.STAFF.name}<br/>
+        <a href="LogoutServlet">Log out</a><br/>
         <h1>Choose meal</h1>
         <c:set var="menu" value="${requestScope.MENU}"/>
         <c:if test="${not empty menu}">

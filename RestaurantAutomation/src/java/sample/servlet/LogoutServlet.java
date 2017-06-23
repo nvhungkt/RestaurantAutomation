@@ -33,8 +33,9 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession();
-            session.removeAttribute("STAFF");            
+            HttpSession session = request.getSession(false);
+            if (session != null)
+                session.invalidate();
         }
         finally {
             response.sendRedirect("login.html");

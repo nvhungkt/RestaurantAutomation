@@ -13,6 +13,8 @@
         <title>Restaurant Automation</title>
     </head>
     <body>
+        Welcome, ${sessionScope.STAFF.name}<br/>
+        <a href="LogoutServlet">Log out</a><br/>
         <table border="1">
             <thead>
                 <tr>

@@ -36,10 +36,14 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         PrintWriter out = response.getWriter();
+        
         String id = request.getParameter("txtId");
         String password = request.getParameter("txtPassword");
+        
         String url = invalidPage;
+        
         try {
             TblStaffDAO dao = new TblStaffDAO();
             TblStaffDTO staff = dao.login(id, password);

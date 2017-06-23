@@ -13,8 +13,8 @@
         <title>View Orders</title>
     </head>
     <body>
-        Welcome, ${sessionScope.STAFF.name}</br>
-        <a href="LogoutServlet">Log out</a></br>
+        Welcome, ${sessionScope.STAFF.name}<br/>
+        <a href="LogoutServlet">Log out</a><br/>
         <h2>Here is order list</h2></br>
         <c:if test="${not empty sessionScope.RESULT}">
             <table border="1">
