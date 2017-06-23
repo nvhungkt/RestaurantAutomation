@@ -6,6 +6,7 @@
 package sample.tbltable;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,5 +45,60 @@ public class TblTableDAO implements Serializable{
             
         }
         return tables;
+    }
+    
+    public void updateTable(int number, int capacity) throws NamingException, SQLException {
+        try {
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                String sql = "{call updateTable(?, ?)}";
+                CallableStatement cstm = con.prepareCall(sql);
+                
+                cstm.setInt(1, number);
+                cstm.setInt(2, capacity);
+                
+                cstm.execute();
+            }
+        } finally {
+           if (con != null)
+               con.close();
+        }
+    }
+    
+    //actually just deactive this table
+    public void removeTable(int number) throws NamingException, SQLException {
+        try {
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                String sql = "{call removeTable(?)}";
+                CallableStatement cstm = con.prepareCall(sql);
+                
+                cstm.setInt(1, number);
+                
+                cstm.execute();
+            }
+        } finally {
+           if (con != null)
+               con.close();
+        }
+    }
+    
+    public boolean checkTableExist(int number) throws NamingException, SQLException {
+        try {
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM tblTable WHERE number = ? AND isActive = 1";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, number);
+                
+                rs = stm.executeQuery();
+                if (rs.next())
+                    return true;
+            }
+        } finally {
+           if (con != null)
+               con.close();
+        }
+        return false;
     }
 }
