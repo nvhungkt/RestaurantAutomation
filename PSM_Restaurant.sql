@@ -266,6 +266,30 @@ AS
 	SELECT @total AS totalPrice
 GO
 
+--get bill details
+IF OBJECT_ID('getBillDetailWithTable', 'P') IS NOT NULL
+	DROP PROCEDURE getBillDetailWithTable
+GO
+CREATE PROCEDURE getBillDetailWithTable
+	@tableNumber INT
+AS
+	DECLARE @orderID VARCHAR(50)
+	SELECT @orderID = id
+	FROM tblOrder
+	WHERE tableNumber = @tableNumber AND leavingTime IS NULL
+	
+	DECLARE @date DATE
+	SELECT @date = [date]
+	FROM tblOrder
+	WHERE id = @orderID
+	
+	SELECT [no], name, quantity, price, price * quantity AS total
+	FROM tblOrderDetail, tblMeal, tblPrice
+	WHERE orderID = @orderID 
+	AND tblOrderDetail.mealID = tblMeal.id AND tblOrderDetail.mealID = tblPrice.mealID
+	AND @date >= fromDate AND toDate IS NULL
+GO
+
 --get bill with order id
 IF OBJECT_ID('getBillWithOrderID', 'P') IS NOT NULL
 	DROP PROCEDURE getBillWithOrderID
@@ -638,3 +662,7 @@ IF OBJECT_ID('getMenu', 'P') IS NOT NULL
 GO
 CREATE PROCEDURE getMenu
 AS
+	SELECT id, name, unit, price
+	FROM tblMeal, tblPrice
+	WHERE isAvailable = 1 AND id = mealID AND toDate IS NULL
+GO
