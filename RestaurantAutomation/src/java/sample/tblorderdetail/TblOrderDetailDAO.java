@@ -277,7 +277,7 @@ public class TblOrderDetailDAO implements Serializable {
                 String cate = rs.getString("Category");
                 Time takenTime = rs.getTime("takenTime");
                 String status = rs.getString("status");
-                OrderDetail order = new OrderDetail(orderId, no, mealName, mealUnit, quantity, cate, takenTime, status);
+                OrderDetail order = new OrderDetail(orderId, 0, no, mealName, mealUnit, quantity, cate, takenTime, status);
                 orderList.add(order);
             }
         } finally {

@@ -57,6 +57,10 @@
         <servlet-class>sample.servlet.LoadOrderServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RemoveOrderDetailServlet</servlet-name>
+        <servlet-class>sample.servlet.RemoveOrderDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ManageTableServlet</servlet-name>
         <servlet-class>sample.servlet.ManageTableServlet</servlet-class>
     </servlet>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>LoadOrderServlet</servlet-name>
         <url-pattern>/LoadOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveOrderDetailServlet</servlet-name>
+        <url-pattern>/RemoveOrderDetailServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageTableServlet</servlet-name>
