@@ -15,6 +15,7 @@ import java.sql.Time;
  */
 public class OrderDetail implements Serializable {
     private String orderId;
+    private int tableNumber
     private int no;
     private String mealName;
     private String mealUnit;
@@ -23,8 +24,9 @@ public class OrderDetail implements Serializable {
     private Time takenTime;
     private String status;    
 
-    public OrderDetail(String orderId, int no, String mealName, String mealUnit, BigDecimal quantity, String category, Time takenTime, String status) {
+    public OrderDetail(String orderId, int tableNumber, int no, String mealName, String mealUnit, BigDecimal quantity, String category, Time takenTime, String status) {
         this.orderId = orderId;
+        this.tableNumber = tableNumber;
         this.no = no;
         this.mealName = mealName;
         this.mealUnit = mealUnit;
@@ -32,6 +34,13 @@ public class OrderDetail implements Serializable {
         this.category = category;
         this.takenTime = takenTime;
         this.status = status;
+    }
+    public int getTableNumber() {
+        return tableNumber;
+    }
+
+    public void setTableNumber(int tableNumber) {
+        this.tableNumber = tableNumber;
     }
 
     public String getOrderId() {
