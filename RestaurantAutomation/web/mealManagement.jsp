@@ -22,17 +22,18 @@
             Meal name: <input type="text" name="mealName" value="${param.mealName}" /> <br/>
             Unit: <input type="text" name="unit" value="${param.unit}" /> <br/>
             Price: <input type="text" name="price" value="${param.price}" /> <br/>
-            <font color="red">${requestScope.ERROR}</font>
             Category: 
-            
+
             <c:set var="cateItems" value="${requestScope.CATEGORY}"/>
             <select name="category">
                 <c:forEach var="item" items="${cateItems}">
-                    <option>${item}</option>
+                    <option value="${item.id}">${item.name}</option>
                 </c:forEach>
             </select> <br/>
             <input type="submit" value="Add" name="mealAction" />
         </form> <br/>
+        
+        <font color="red">${requestScope.ERROR}</font>
         
         <c:set var="meal" value="${requestScope.MEAL}"/>
         <c:if test="${not empty meal}">
@@ -51,7 +52,44 @@
                 <tbody>
                     <c:forEach var="dto" items="${meal}">
                     <form action="ManageMealServlet">
-                        
+                        <tr>
+                            <td>
+                                ${dto.id}
+                                <input type="hidden" name="mealID" value="${dto.id}" />
+                            </td>
+                            <td>
+                                <input type="text" name="mealName" value="${dto.name}" />
+                            </td>
+                            <td>
+                                <input type="text" name="unit" value="${dto.unit}" />
+                            </td>
+                            <td>
+                                <input type="text" name="price" value="${dto.price}" />
+                            </td>
+                            <td>
+                                <select name="category">
+                                    <c:forEach var="item" items="${cateItems}">
+                                        <option value="${item.id}"
+                                                <c:if test="${dto.cateID eq item.id}">
+                                                    selected
+                                                </c:if>
+                                                    >
+                                            ${item.name}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                            <td>
+                                <c:url var="removeLink" value="ManageMealServlet">
+                                    <c:param name="mealAction" value="Delete"/>
+                                    <c:param name="mealID" value="${dto.id}"/>
+                                </c:url>
+                                <a href="${removeLink}">Remove</a>
+                            </td>
+                            <td>
+                                <input type="submit" value="Update" name="mealAction" />
+                            </td>
+                        </tr>
                     </form>
                     </c:forEach>
                 </tbody>
