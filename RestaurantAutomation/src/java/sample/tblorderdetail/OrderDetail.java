@@ -15,7 +15,7 @@ import java.sql.Time;
  */
 public class OrderDetail implements Serializable {
     private String orderId;
-    private int tableNumber
+    private int tableNumber;
     private int no;
     private String mealName;
     private String mealUnit;
