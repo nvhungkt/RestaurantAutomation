@@ -427,6 +427,11 @@ AS
 	FROM tblMeal
 	SET @id = @id + 1
 	
+	IF (@id < 100)
+		SET @id = '0' + @id
+	IF (@id < 10)
+		SET @id = '00' + @id
+	
 	DECLARE @fromDate DATE
 	SET @fromDate = GETDATE()
 	
