@@ -447,7 +447,13 @@ CREATE PROCEDURE updateMeal
 AS	
 	UPDATE tblMeal SET name = @name, unit = @unit, cateID = @cateID WHERE id = @id
 	BEGIN
-		EXEC updatePrice @id, @price
+		DECLARE @oldPrice DECIMAL(18, 2)
+		SELECT @oldPrice = price 
+		FROM tblPrice
+		WHERE mealID = @id AND toDate IS NULL
+		
+		IF (@oldPrice <> @price)
+			EXEC updatePrice @id, @price
 	END
 GO
 
@@ -692,7 +698,7 @@ CREATE PROCEDURE loadAllMeals
 AS
 	SELECT m.id, m.name, m.unit, p.price, m.cateID
 	FROM tblMeal m, tblPrice p
-	WHERE m.id = p.mealID AND p.toDate IS NULL
+	WHERE m.id = p.mealID AND isAvailable = 1 AND p.toDate IS NULL
 GO
 
 --load Category
