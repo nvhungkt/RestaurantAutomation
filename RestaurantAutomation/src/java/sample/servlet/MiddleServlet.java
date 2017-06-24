@@ -87,7 +87,7 @@ public class MiddleServlet extends HttpServlet {
                     } else if (button.equals("ManageTable")) {
                         url = "ManageTableServlet";
                     } else if (button.equals("ManageMeal")) {
-                        url = "mealManagement.jsp";
+                        url = "ManageMealServlet";
                     } else if (button.equals("report")) {
                         url = "report.jsp";
                     }
