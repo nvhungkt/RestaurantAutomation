@@ -36,16 +36,19 @@ public class TblOrderDAO implements Serializable{
         try {
             con = DBUtilities.makeConnection();
             if (con != null) {
+//                stm = con.prepareStatement("SELECT * FROM tblOrder WHERE "
+//                        + "tableNumber = ? AND date = ? AND leavingTime IS NULL");
                 stm = con.prepareStatement("SELECT * FROM tblOrder WHERE "
-                        + "tableNumber = ? AND date = ? AND leavingTime IS NULL");
+                        + "tableNumber = ? AND leavingTime IS NULL");
                 stm.setInt(1, tableNumber);
                 
-                java.util.Date date = new java.util.Date();
-                Date sqlDate = new Date(date.getYear(), date.getMonth(), date.getDate());
-                
-                stm.setDate(2, sqlDate);
+//                java.util.Date date = new java.util.Date();
+//                Date sqlDate = new Date(date.getYear(), date.getMonth(), date.getDate());
+//                
+//                stm.setDate(2, sqlDate);
                 rs = stm.executeQuery();
                 if (rs.next()) {
+//                    System.out.println("if dau tien");
                     String orderID = rs.getString("id");
                     order = new TblOrderDTO(orderID);
                     stm = con.prepareStatement("SELECT tblOrderDetail.*, tblMeal.name AS mealName, "
@@ -56,7 +59,10 @@ public class TblOrderDAO implements Serializable{
                             + "AND toDate IS NULL");
                     stm.setString(1, orderID);
                     rs = stm.executeQuery();
+//                    if(rs.next() == false)
+//                        System.out.println("no result");
                     while (rs.next()) {
+//                        System.out.println("result found");
                         int no = rs.getInt("no");
                         String mealID = rs.getString("mealID");
                         int quantity = rs.getInt("quantity");
@@ -74,7 +80,10 @@ public class TblOrderDAO implements Serializable{
                                 quantity, takenTime, readyTime, status, cookID));
                     }
                     order.setOrderDetails(list);
-                }
+                } 
+//                else {
+//                    System.out.println("not found dau tien");
+//                }
             }
         } finally {
             if (rs != null) rs.close();

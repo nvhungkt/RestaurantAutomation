@@ -42,10 +42,11 @@ public class LoadOrderServlet extends HttpServlet {
         int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber"));
         
         try {
+//            System.out.println(tableNumber);
             TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
-            if(order != null)
-                System.out.println("have order");
-            else System.out.println("no order");
+//            if(order != null)
+//                System.out.println("have order");
+//            else System.out.println("no order");
             request.setAttribute("ORDER", order);
         } catch (NamingException ex) {
             log("LoadOrderServlet NamingException" + ex.getMessage());

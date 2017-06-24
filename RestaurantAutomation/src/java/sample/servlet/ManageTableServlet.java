@@ -58,15 +58,15 @@ public class ManageTableServlet extends HttpServlet {
                 if (!number.matches("\\d+")) {
                     response.sendRedirect(url);
                 } else if (button.equals("delete")) {
-                    dao.removeTable(Integer.parseInt(number));
+                    //dao.removeTable(Integer.parseInt(number));
 
                     response.sendRedirect(url);
                 } else if (button.equals("Update")) {
-                    dao.updateTable(Integer.parseInt(number), Integer.parseInt(capacity));
+                    //dao.updateTable(Integer.parseInt(number), Integer.parseInt(capacity));
 
                     response.sendRedirect(url);
                 } else if (button.equals("Add")) {
-                    boolean exist = dao.checkTableExist(Integer.parseInt(number));
+                    /*boolean exist = dao.checkTableExist(Integer.parseInt(number));
 
                     if (!exist) {
                         dao.updateTable(Integer.parseInt(number), Integer.parseInt(capacity));
@@ -75,7 +75,7 @@ public class ManageTableServlet extends HttpServlet {
                         request.setAttribute("ERROR", "This table number is already exist <br/>");
                         RequestDispatcher rd = request.getRequestDispatcher("tableManagement.jsp");
                         rd.forward(request, response);
-                    }
+                    }*/
                 }
             }
         } catch (NamingException ex) {

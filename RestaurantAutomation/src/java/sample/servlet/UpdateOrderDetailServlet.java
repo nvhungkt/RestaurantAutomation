@@ -11,12 +11,14 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sample.tblorder.TblOrderDAO;
 import sample.tblorder.TblOrderDTO;
+import sample.tblorderdetail.TblOrderDetailDAO;
 
 /**
  *
@@ -38,18 +40,30 @@ public class UpdateOrderDetailServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber"));
-        String[] selectedQuantities = request.getParameterValues("txtEditableQuantity");
-        String url = "";
+        String[] quantityValues = request.getParameterValues("txtEditableQuantity");
+        String[] orderDetailIDValues = request.getParameterValues("txtOrderDetailID");
+        String urlRewriting = "MiddleServlet?"
+                + "btAction=View+editable+order&"
+                + "txtTableNumber=" + tableNumber;
         try {
             TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
-            for (int i = 0; i < 10; i++) {
-                
+            int quantity = 0;
+            TblOrderDetailDAO dao = new TblOrderDetailDAO();
+            for (int i = 0; i < quantityValues.length; i++) {
+                quantity = Integer.parseInt(quantityValues[i]);
+                if(quantity > 0) {
+                    dao.updateOrderDetailQuantity(order.getId(), orderDetailIDValues[i], quantity);
+                } else if(quantity == 0) {
+                    dao.deleteOrderDetail(order.getId(), orderDetailIDValues[i]);
+                }
             }
         } catch (NamingException ex) {
             log("UpdateOrderDetailServlet NamingException: " + ex.getMessage());
         } catch (SQLException ex) {
             log("UpdateOrderDetailServlet SQLException: " + ex.getMessage());
         } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(urlRewriting);
+            rd.forward(request, response);
             out.close();
         }
     }

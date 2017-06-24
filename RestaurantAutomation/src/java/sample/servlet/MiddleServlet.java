@@ -24,6 +24,7 @@ public class MiddleServlet extends HttpServlet {
     private final String loginPage = "login.html";
     private final String loadOrderServlet = "LoadOrderServlet";
     private final String updateOrderDetailServlet = "UpdateOrderDetailServlet";
+    private final String removeOrderDetailServlet = "RemoveOrderDetailServlet";
     private final String addOrderDetailServlet = "AddOrderDetailServlet";
     private final String takeOrderServlet = "TakeOrderServlet";
     private final String checkOutServlet = "CheckOutServlet";
@@ -61,7 +62,7 @@ public class MiddleServlet extends HttpServlet {
                 } else if(button.equals("Update order") && staff.getRole().equals("waiter")) {
                     url = updateOrderDetailServlet;
                 } else if(button.equals("Remove order") && staff.getRole().equals("waiter")) {
-                    url = updateOrderDetailServlet;
+                    url = removeOrderDetailServlet;
                 } else if(button.equals("View editable order") && staff.getRole().equals("waiter")) {
                     url = loadOrderServlet;
                 } else if(button.equals("Add order") && staff.getRole().equals("waiter")) {
