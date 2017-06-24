@@ -434,6 +434,23 @@ AS
 	INSERT INTO tblPrice VALUES(@id, @price, @fromDate, NULL)
 GO
 
+--update meal
+IF OBJECT_ID('updateMeal', 'P') IS NOT NULL
+	DROP PROCEDURE updateMeal
+GO
+CREATE PROCEDURE updateMeal
+	@id VARCHAR(20),
+	@name NVARCHAR(50),
+	@unit VARCHAR(20),
+	@price DECIMAL(18, 2),
+	@cateID VARCHAR(20)
+AS	
+	UPDATE tblMeal SET name = @name, unit = @unit, cateID = @cateID WHERE id = @id
+	BEGIN
+		EXEC updatePrice @id, @price
+	END
+GO
+
 --remove meal
 IF OBJECT_ID('removeMeal', 'P') IS NOT NULL
 	DROP PROCEDURE removeMeal
@@ -458,7 +475,7 @@ AS
 	DECLARE @currentFromDate DATE
 	SELECT @currentFromDate = fromDate
 	FROM tblPrice
-	WHERE mealID = '003' AND toDate IS NULL
+	WHERE mealID = @id AND toDate IS NULL
 	
 	IF (@fromDate <> @currentFromDate)
 	BEGIN
