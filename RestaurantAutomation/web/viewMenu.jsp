@@ -27,6 +27,7 @@
             </div>
         </nav>
 
+        <a href="MiddleServlet">Click here to re-view table</a><br/>
         <h1>Choose meal</h1>
         <c:set var="menu" value="${requestScope.MENU}"/>
         <c:if test="${not empty menu}">
