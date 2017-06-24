@@ -21,7 +21,7 @@
             <table border="1">
                 <thead>
                     <tr>                        
-                        <th>Order ID</th>
+                        <th>Table Number</th>
                         <th>Order No</th>
                         <th>Meal Name</th>
                         <th>Meal Unit</th>
@@ -37,7 +37,7 @@
                         <tr>
                     <form action="MiddleServlet">
                         <td>
-                            ${order.orderId}
+                            ${order.tableNumber}
                             <input type="hidden" name="txtOrderId" value="${order.orderId}" />
                         </td>
                         <td>
