@@ -68,6 +68,10 @@
         <servlet-name>ManageMealServlet</servlet-name>
         <servlet-class>sample.servlet.ManageMealServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>sample.servlet.ReportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>ManageMealServlet</servlet-name>
         <url-pattern>/ManageMealServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/ReportServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

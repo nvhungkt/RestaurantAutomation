@@ -14,7 +14,8 @@
     </head>
     <body>
         Welcome, ${sessionScope.STAFF.name}<br/>
-        <a href="LogoutServlet">Log out</a><br/>
+        <a href="LogoutServlet">Log out</a><br/> <br/>
+        <a href="manager.jsp">Back to management page</a>
         <h1>Table Management</h1>
         
         <b>Add new table</b> <br/>

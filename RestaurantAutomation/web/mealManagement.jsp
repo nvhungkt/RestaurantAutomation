@@ -14,7 +14,8 @@
     </head>
     <body>
         Welcome, ${sessionScope.STAFF.name}<br/>
-        <a href="LogoutServlet">Log out</a><br/>
+        <a href="LogoutServlet">Log out</a><br/> <br/>
+        <a href="manager.jsp">Back to management page</a>
         <h1>Meal Management</h1>
         
         <b>Add new meal</b> <br/>
@@ -34,6 +35,8 @@
         </form> <br/>
         
         <font color="red">${requestScope.ERROR}</font>
+        
+        <a href="MiddleServlet?btAction=ManageMeal">Reload Meals</a> <br/> <br/>
         
         <c:set var="meal" value="${requestScope.MEAL}"/>
         <c:if test="${not empty meal}">
