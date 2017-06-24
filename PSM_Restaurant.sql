@@ -666,3 +666,24 @@ AS
 	FROM tblMeal, tblPrice
 	WHERE isAvailable = 1 AND id = mealID AND toDate IS NULL
 GO
+
+--load Meal
+IF OBJECT_ID('loadAllMeals', 'P') IS NOT NULL
+	DROP PROCEDURE loadAllMeals 
+GO
+CREATE PROCEDURE loadAllMeals
+AS
+	SELECT m.id, m.name, m.unit, p.price, m.cateID
+	FROM tblMeal m, tblPrice p
+	WHERE m.id = p.mealID AND p.toDate IS NULL
+GO
+
+--load Category
+IF OBJECT_ID('loadCategory', 'P') IS NOT NULL
+	DROP PROCEDURE loadCategory 
+GO
+CREATE PROCEDURE loadCategory
+AS
+	SELECT *
+	FROM tblCategory
+GO
