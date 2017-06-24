@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -197,10 +197,10 @@ public class TblOrderDetailDAO implements Serializable {
         ResultSet rs = null;
         try {
             con = DBUtilities.makeConnection();
-            String sql = "SELECT o.orderID AS OrderID, o.no, m.name AS MealName,\n" +
+            String sql = "SELECT o.orderID AS OrderID, t.number AS TableNumber, o.no, m.name AS MealName,\n" +
                     "m.unit AS MealUnit,  o.quantity, c.name AS Category, o.takenTime, o.status\n" +
-                    "FROM tblOrderDetail o, tblMeal m, tblCategory c\n" +
-                    "WHERE o.mealID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')\n" +
+                    "FROM tblOrderDetail o, tblMeal m, tblCategory c, tblOrder r, tblTable t\n" +
+                    "WHERE o.mealID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking') AND r.id = o.orderID AND r.tableNumber = t.number\n" +
 		    "ORDER BY o.takenTime";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -209,6 +209,7 @@ public class TblOrderDetailDAO implements Serializable {
             }
             while (rs.next()) {
                 String orderId = rs.getString("OrderID");
+                int tableNumber = rs.getInt("TableNumber");
                 int no = rs.getInt("no");
                 String mealName = rs.getString("MealName");
                 String mealUnit = rs.getString("MealUnit");
@@ -216,7 +217,7 @@ public class TblOrderDetailDAO implements Serializable {
                 String cate = rs.getString("Category");
                 Time takenTime = rs.getTime("takenTime");
                 String status = rs.getString("status");
-                OrderDetail order = new OrderDetail(orderId, no, mealName, mealUnit, quantity, cate, takenTime, status);
+                OrderDetail order = new OrderDetail(orderId, tableNumber, no, mealName, mealUnit, quantity, cate, takenTime, status);
                 orderList.add(order);
             }
         } finally {
