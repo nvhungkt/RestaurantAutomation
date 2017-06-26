@@ -15,8 +15,8 @@
     <body>
         Welcome, ${sessionScope.STAFF.name}</br>
         <a href="LogoutServlet">Log out</a></br>
-        
-        <h2>Here is order list</h2>         
+
+        <h2>Here is order list</h2>                
         <c:if test="${not empty sessionScope.RESULT}">
             <table border="1">
                 <thead>
@@ -34,34 +34,36 @@
                 </thead>
                 <tbody>
                     <c:forEach var="order" items="${sessionScope.RESULT}">
-                        <tr>
-                    <form action="MiddleServlet">
-                        <td>
-                            ${order.tableNumber}
-                            <input type="hidden" name="txtOrderId" value="${order.orderId}" />
-                        </td>
-                        <td>
-                            ${order.no}
-                            <input type="hidden" name="txtOrderNo" value="${order.no}" />
-                        </td>
-                        <td>${order.mealName}</td>
-                        <td>${order.mealUnit}</td>
-                        <td>${order.quantity}</td>
-                        <td>${order.category}</td>
-                        <td>${order.takenTime}</td>
-                        <td>${order.status}</td>
-                        <c:if test="${order.status eq 'cooking'}">
+                        <c:if test="${order.status eq 'ordered' || order.status eq 'cooking'}">
+                            <tr>
+                        <form action="MiddleServlet">
                             <td>
-                                <input type="submit" value="Finish" name="btAction" />
+                                ${order.tableNumber}
+                                <input type="hidden" name="txtOrderId" value="${order.orderId}" />
                             </td>
-                        </c:if>
-                        <c:if test="${order.status eq 'ordered'}">
                             <td>
-                                <input type="submit" value="Cook" name="btAction" />
+                                ${order.no}
+                                <input type="hidden" name="txtOrderNo" value="${order.no}" />
                             </td>
-                        </c:if>
-                    </form>
-                </tr>
+                            <td>${order.mealName}</td>
+                            <td>${order.mealUnit}</td>
+                            <td>${order.quantity}</td>
+                            <td>${order.category}</td>
+                            <td>${order.takenTime}</td>
+                            <td>${order.status}</td>
+                            <c:if test="${order.status eq 'cooking'}">
+                                <td>
+                                    <input type="submit" value="Finish" name="btAction" />
+                                </td>
+                            </c:if>
+                            <c:if test="${order.status eq 'ordered'}">
+                                <td>
+                                    <input type="submit" value="Cook" name="btAction" />
+                                </td>
+                            </c:if>
+                        </form>
+                    </tr>
+                </c:if>
             </c:forEach>                    
         </tbody>
     </table>
