@@ -62,7 +62,7 @@
                                            <c:if test="${table.status ne 'cleaned'}">disabled="disabled"</c:if>
                                            name="btAction" /></td>
                             </c:if>
-                            <c:if test="${staff.role eq 'busboy'}">
+                            <c:if test="${staff.role eq 'bus boy'}">
                                 <td><input type="submit" value="Clean Table" class="btn btn-success"
                                            <c:if test="${table.status ne 'dirty'}">disabled="disabled"</c:if>
                                            name="btAction" /></td>

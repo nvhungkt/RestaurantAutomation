@@ -72,6 +72,14 @@
         <servlet-name>ReportServlet</servlet-name>
         <servlet-class>sample.servlet.ReportServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServeFoodServlet</servlet-name>
+        <servlet-class>sample.servlet.ServeFoodServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FinishCheckOutServlet</servlet-name>
+        <servlet-class>sample.servlet.FinishCheckOutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
@@ -143,6 +151,14 @@
     <servlet-mapping>
         <servlet-name>ReportServlet</servlet-name>
         <url-pattern>/ReportServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServeFoodServlet</servlet-name>
+        <url-pattern>/ServeFoodServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FinishCheckOutServlet</servlet-name>
+        <url-pattern>/FinishCheckOutServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

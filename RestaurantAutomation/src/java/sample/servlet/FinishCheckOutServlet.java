@@ -10,21 +10,23 @@ import java.io.PrintWriter;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.tblorder.TblOrderDAO;
-import sample.tblorder.TblOrderDTO;
 import sample.utils.DBUtilities;
 
 /**
  *
  * @author ahhun
  */
-public class CheckOutServlet extends HttpServlet {
-    private final String checkOutPage = "checkOut.jsp";
+public class FinishCheckOutServlet extends HttpServlet {
+    private Connection con;
+    private CallableStatement stm;
+    private final String middleServlet = "MiddleServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,15 +42,18 @@ public class CheckOutServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
         try {
-            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
-            request.setAttribute("ORDER", order);
-            
-        } catch (NamingException ex) {
-            ex.printStackTrace();
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                stm = con.prepareCall("EXEC archiveOrder ?");
+                stm.setInt(1, tableNumber);
+                stm.execute();
+            }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(FinishCheckOutServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(FinishCheckOutServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            request.getRequestDispatcher(checkOutPage).forward(request, response);
+            response.sendRedirect(middleServlet);
             out.close();
         }
     }

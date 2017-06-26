@@ -13,7 +13,8 @@
         <title>View Orders</title>
     </head>
     <body>
-        Welcome, ${sessionScope.STAFF.name}</br>
+        <c:set var="staff" value="${sessionScope.STAFF}"/>
+        Welcome, ${staff.name}</br>
         <a href="LogoutServlet">Log out</a></br>
 
         <h2>Here is order list</h2>                
@@ -34,12 +35,15 @@
                 </thead>
                 <tbody>
                     <c:forEach var="order" items="${sessionScope.RESULT}">
-                        <c:if test="${order.status eq 'ordered' || order.status eq 'cooking'}">
+                        <c:if test="${((order.status eq 'ordered' or order.status eq 'cooking')
+                                        and staff.role eq 'cook') or
+                                      (order.status eq 'ready' and staff.role eq 'waiter')}">
                             <tr>
                         <form action="MiddleServlet">
                             <td>
                                 ${order.tableNumber}
                                 <input type="hidden" name="txtOrderId" value="${order.orderId}" />
+                                <input type="hidden" name="txtTableNumber" value="${order.tableNumber}" />
                             </td>
                             <td>
                                 ${order.no}
@@ -61,6 +65,11 @@
                                     <input type="submit" value="Cook" name="btAction" />
                                 </td>
                             </c:if>
+                            <c:if test="${order.status eq 'ready'}">
+                                <td>
+                                    <input type="submit" value="Serve" name="btAction" />
+                                </td>
+                            </c:if>
                         </form>
                     </tr>
                 </c:if>
@@ -69,7 +78,7 @@
     </table>
 </c:if>
 <c:if test="${empty sessionScope.RESULT}">
-    <h2>All orders were cooked</h2>
+    <h2>All orders were done</h2>
 </c:if>
 
 </body>

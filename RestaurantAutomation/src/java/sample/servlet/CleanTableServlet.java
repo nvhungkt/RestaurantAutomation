@@ -43,6 +43,7 @@ public class CleanTableServlet extends HttpServlet {
         TblStaffDTO staff = (TblStaffDTO) request.getSession(false).getAttribute("STAFF");
         
         try {
+            System.out.println("here here");
             con = DBUtilities.makeConnection();
             if (con != null) {
                 stm = con.prepareCall("EXEC cleanTable ?, ?");

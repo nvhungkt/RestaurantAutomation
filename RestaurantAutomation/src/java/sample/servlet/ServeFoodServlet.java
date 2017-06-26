@@ -10,21 +10,22 @@ import java.io.PrintWriter;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.tblorder.TblOrderDAO;
-import sample.tblorder.TblOrderDTO;
 import sample.utils.DBUtilities;
 
 /**
  *
  * @author ahhun
  */
-public class CheckOutServlet extends HttpServlet {
-    private final String checkOutPage = "checkOut.jsp";
+public class ServeFoodServlet extends HttpServlet {
+    private Connection con;
+    private CallableStatement stm;
+    private final String viewOrderListServlet = "ViewOrderListServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,18 +39,29 @@ public class CheckOutServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
+        
         try {
-            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
-            request.setAttribute("ORDER", order);
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                stm = con.prepareCall("EXEC deliverMeal ?, ?");
+                stm.setInt(1, Integer.parseInt(request.getParameter("txtTableNumber").trim()));
+                stm.setInt(2, Integer.parseInt(request.getParameter("txtOrderNo").trim()));
+                stm.execute();
+            }
             
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            request.getRequestDispatcher(checkOutPage).forward(request, response);
-            out.close();
+            try {
+                if (stm != null) stm.close();
+                if (con != null) con.close();
+                response.sendRedirect(viewOrderListServlet);
+                out.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
