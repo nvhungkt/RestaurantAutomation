@@ -42,7 +42,7 @@ public class ViewMenuServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
+//        TblOrderDTO order = (TblOrderDTO) request.getAttribute("ORDER");
         String url = viewMenuPage;
         try {
             TblMealDAO dao = new TblMealDAO();

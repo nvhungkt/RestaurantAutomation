@@ -7,17 +7,26 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sample.tblorder.TblOrderDAO;
+import sample.tblorder.TblOrderDTO;
+import sample.utils.DBUtilities;
 
 /**
  *
  * @author ahhun
  */
 public class CheckOutServlet extends HttpServlet {
-
+    private Connection con;
+    private CallableStatement stm;
+    private final String checkOutPage = "checkOut.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,17 +39,25 @@ public class CheckOutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CheckOutServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CheckOutServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
+        try {
+            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
+            request.setAttribute("ORDER", order);
+            
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                stm = con.prepareCall("EXEC archiveOrder ?");
+                stm.setInt(1, tableNumber);
+                stm.execute();
+            }
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(checkOutPage).forward(request, response);
+            out.close();
         }
     }
 

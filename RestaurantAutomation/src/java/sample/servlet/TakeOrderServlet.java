@@ -35,15 +35,15 @@ public class TakeOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
+//        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
         try {
-            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
-            request.setAttribute("ORDER", order);
+//            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
+//            request.setAttribute("ORDER", order);
             
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+//        } catch (NamingException ex) {
+//            ex.printStackTrace();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
         } finally {
             request.getRequestDispatcher(viewMenuServlet).forward(request, response);
             out.close();
