@@ -85,8 +85,6 @@ AS
 GO
 	
 
---for waiter
---
 --create new order
 IF OBJECT_ID('createNewOrder', 'P') IS NOT NULL
 	DROP PROCEDURE createNewOrder
@@ -94,7 +92,6 @@ GO
 
 CREATE PROCEDURE createNewOrder
 	@tableNumber INT,
-	@waiterID VARCHAR(20),
 	@customerName NVARCHAR(50)
 AS
 	DECLARE @tblstatus VARCHAR(10)
@@ -127,10 +124,12 @@ AS
 		DECLARE @arriveTime TIME
 		SELECT @arriveTime = GETDATE()
 		
-		INSERT INTO tblOrder VALUES(@currentID, @tableNumber, @waiterID, @customerName, @date, @arriveTime, NULL)
+		INSERT INTO tblOrder VALUES(@currentID, @tableNumber, NULL, @customerName, @date, @arriveTime, NULL)
 	END
 GO
 
+--for waiter
+--
 --archive order
 IF OBJECT_ID('archiveOrder', 'P') IS NOT NULL
 	DROP PROCEDURE archiveOrder
@@ -151,6 +150,23 @@ AS
 	
 	UPDATE tblTable SET [status] = 'dirty' WHERE number = @tableNumber
 GO
+
+--take this order
+IF OBJECT_ID('serveThisOrder', 'P') IS NOT NULL
+	DROP PROCEDURE serveThisOrder
+GO
+CREATE PROCEDURE serveThisOrder
+	@tableNumber INT,
+	@waiterID VARCHAR(20)
+AS
+	DECLARE @orderID VARCHAR(50)
+	SELECT @orderID = id
+	FROM tblOrder
+	WHERE tableNumber = @tableNumber AND leavingTime IS NULL AND waiterID IS NULL
+	
+	UPDATE tblOrder SET waiterID = @waiterID WHERE id = @orderID
+GO
+
 
 --Cancel order
 IF OBJECT_ID('cancelOrder', 'P') IS NOT NULL
