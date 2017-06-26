@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -250,47 +250,45 @@ public class TblOrderDetailDAO implements Serializable {
     }
 
     public void getList() throws NamingException, SQLException {
-        Connection con = null;
+        Connection con =null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBUtilities.makeConnection();
-            String sql = "SELECT o.orderID AS OrderID, o.no, m.name AS MealName, "
-                    + "m.unit AS MealUnit,  o.quantity, c.name AS Category, o.takenTime, o.status "
-                    + "FROM tblOrderDetail o, "
-                    + "(SELECT * "
-                    + "FROM tblMeal) m, "
-                    + "(SELECT * "
-                    + "FROM tblCategory) c "
-                    + "WHERE o.cookID = m.id AND c.id = m.cateID AND (o.status LIKE 'ordered' OR o.status LIKE 'cooking')";
+            String sql = "SELECT o.orderID AS OrderID, t.number AS TableNumber, o.no, m.name AS MealName,\n" +
+                    "m.unit AS MealUnit,  o.quantity, c.name AS Category, o.takenTime, o.status\n" +
+                    "FROM tblOrderDetail o, tblMeal m, tblCategory c, tblOrder r, tblTable t\n" +
+                    "WHERE o.mealID = m.id AND c.id = m.cateID AND r.id = o.orderID AND r.tableNumber = t.number\n" +
+		    "ORDER BY o.takenTime";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
-            if (orderList == null) {
+            if(orderList==null) {
                 orderList = new ArrayList<OrderDetail>();
             }
-            while (rs.next()) {
-                String orderId = rs.getString("OrderID");
-                int no = rs.getInt("no");
-                String mealName = rs.getString("MealName");
-                String mealUnit = rs.getString("MealUnit");
-                BigDecimal quantity = rs.getBigDecimal("quantity");
-                String cate = rs.getString("Category");
-                Time takenTime = rs.getTime("takenTime");
-                String status = rs.getString("status");
-                OrderDetail order = new OrderDetail(orderId, 0, no, mealName, mealUnit, quantity, cate, takenTime, status);
-                orderList.add(order);
-            }
-        } finally {
-            if (rs != null) {
+           while(rs.next()) {
+               String orderId = rs.getString("OrderID");
+               int tableNumber = rs.getInt("TableNumber");
+               int no = rs.getInt("no");
+               String mealName = rs.getString("MealName");
+               String mealUnit = rs.getString("MealUnit");
+               BigDecimal quantity = rs.getBigDecimal("quantity");
+               String cate = rs.getString("Category");
+               Time takenTime = rs.getTime("takenTime");
+               String status = rs.getString("status");
+               OrderDetail order = new OrderDetail(orderId, tableNumber, no, mealName, mealUnit, quantity, cate, takenTime, status);
+               orderList.add(order);
+           }
+        }
+        finally {
+            if(rs!=null) {
                 rs.close();
             }
-            if (stm != null) {
+            if(stm!=null) {
                 stm.close();
             }
-            if (con != null) {
+            if(con!=null) {
                 con.close();
             }
-        }
-
+        }        
     }
 }
