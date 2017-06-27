@@ -23,6 +23,7 @@ AS
 	IF (@currentStatus = 'dirty')
 	BEGIN
 		INSERT INTO tblClean VALUES (@tableNumber, @time, @busboyID)
+		UPDATE tblTable SET [status] = 'cleaned' WHERE number = @tableNumber
 	END
 	ELSE 
 	BEGIN
