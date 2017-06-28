@@ -126,6 +126,7 @@ AS
 		SELECT @arriveTime = GETDATE()
 		
 		INSERT INTO tblOrder VALUES(@currentID, @tableNumber, NULL, @customerName, @date, @arriveTime, NULL)
+		UPDATE tblTable SET [status] = 'occupied' WHERE number = @tableNumber
 	END
 GO
 
