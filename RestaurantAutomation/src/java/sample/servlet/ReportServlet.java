@@ -63,7 +63,7 @@ public class ReportServlet extends HttpServlet {
                 int turnAround = dao.getAvgTurnAroundTime();
                 request.setAttribute("TURNAROUND", turnAround);
                 
-                int prepareTime = dao.getAvgTurnAroundTime();
+                int prepareTime = dao.getAvgPreparationTime();
                 request.setAttribute("PREPARATION", prepareTime);
             } else if (button.equals("Menu")) {
                 request.setAttribute("MENUFLAG", "MENUFLAG");
