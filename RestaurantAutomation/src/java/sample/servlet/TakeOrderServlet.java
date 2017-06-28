@@ -7,14 +7,17 @@ package sample.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.tblorder.TblOrderDAO;
-import sample.tblorder.TblOrderDTO;
+import sample.tblstaff.TblStaffDTO;
+import sample.utils.DBUtilities;
 
 /**
  *
@@ -22,6 +25,8 @@ import sample.tblorder.TblOrderDTO;
  */
 public class TakeOrderServlet extends HttpServlet {
     private final String viewMenuServlet = "ViewMenuServlet";
+    private Connection con;
+    private CallableStatement stm;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,15 +40,23 @@ public class TakeOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-//        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
+        int tableNumber = Integer.parseInt(request.getParameter("txtTableNumber").trim());
+        TblStaffDTO staff = (TblStaffDTO) request.getSession(false).getAttribute("STAFF");
+        
         try {
 //            TblOrderDTO order = new TblOrderDAO().getOrder(tableNumber);
 //            request.setAttribute("ORDER", order);
-            
-//        } catch (NamingException ex) {
-//            ex.printStackTrace();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
+            con = DBUtilities.makeConnection();
+            if (con != null) {
+                stm = con.prepareCall("EXEC serveThisOrder ?, ?");
+                stm.setInt(1, Integer.parseInt(request.getParameter("txtTableNumber").trim()));
+                stm.setString(2, staff.getId());
+                stm.execute();
+            }
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } finally {
             request.getRequestDispatcher(viewMenuServlet).forward(request, response);
             out.close();

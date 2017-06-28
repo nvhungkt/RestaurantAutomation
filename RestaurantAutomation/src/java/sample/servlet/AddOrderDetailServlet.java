@@ -65,12 +65,14 @@ public class AddOrderDetailServlet extends HttpServlet {
                     String orderID = order.getId();
                     int no = 1;
                     // find max no
-                    for (TblOrderDetailDTO orderDetail : order.getOrderDetails()) {
-                        if(no < orderDetail.getNo()) {
-                            no = orderDetail.getNo(); 
+                    if (order.getOrderDetails() != null) {
+                        for (TblOrderDetailDTO orderDetail : order.getOrderDetails()) {
+                            if(no < orderDetail.getNo()) {
+                                no = orderDetail.getNo(); 
+                            }
                         }
+                        ++no;
                     }
-                    ++no;
                     
                     String mealID = selectedIDs[i];
                     TblMealDAO dao = new TblMealDAO();

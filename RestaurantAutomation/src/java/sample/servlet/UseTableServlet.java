@@ -45,10 +45,9 @@ public class UseTableServlet extends HttpServlet {
         try {
             con = DBUtilities.makeConnection();
             if (con != null) {
-                stm = con.prepareCall("EXEC createNewOrder ?, ?, ?");
+                stm = con.prepareCall("EXEC createNewOrder ?, ?");
                 stm.setInt(1, Integer.parseInt(request.getParameter("txtTableNumber").trim()));
-                stm.setString(2, staff.getId());
-                stm.setNull(3, Types.NVARCHAR);
+                stm.setNull(2, Types.NVARCHAR);
                 stm.execute();
             }
             
