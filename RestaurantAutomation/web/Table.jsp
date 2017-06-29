@@ -18,10 +18,13 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Restaurant Automation</a>
+                    <a class="navbar-brand" href="MiddleServlet">Restaurant Automation</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Welcome, ${sessionScope.STAFF.name}</a></li>
+                    <c:if test="${sessionScope.STAFF.role eq 'waiter'}">
+                        <li><a href="ViewOrderListServlet">View completed meal</a></li>
+                    </c:if>
                     <li><a href="LogoutServlet">Log out</a></li>
                 </ul>
             </div>
