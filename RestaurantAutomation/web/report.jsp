@@ -33,7 +33,7 @@
         <div class="container">
             <h1>Report Export</h1>
             <ul class="pagination">
-                <li><a href="ReportServlet?reportAction=Revenue">Revenue Report</a></li>
+                <li><a href="RevenueServlet">Revenue Report</a></li>
                 <li><a href="ReportServlet?reportAction=Efficiency">Efficiency Report</a></li>
                 <li><a href="ReportServlet?reportAction=Time">Time Report</a></li>
                 <li><a href="ReportServlet?reportAction=Menu">Menu Report</a></li>

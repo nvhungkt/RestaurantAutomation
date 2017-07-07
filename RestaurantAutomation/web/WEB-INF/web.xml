@@ -80,6 +80,10 @@
         <servlet-name>FinishCheckOutServlet</servlet-name>
         <servlet-class>sample.servlet.FinishCheckOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RevenueServlet</servlet-name>
+        <servlet-class>sample.servlet.RevenueServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>FinishCheckOutServlet</servlet-name>
         <url-pattern>/FinishCheckOutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RevenueServlet</servlet-name>
+        <url-pattern>/RevenueServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
