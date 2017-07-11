@@ -61,7 +61,7 @@ public class RevenueServlet extends HttpServlet {
                 List<String> list2 = dao.getMonthsOf(Integer.parseInt(year));
                 request.setAttribute("MONTH", list2);
                 
-                double yearRevenue = dao.getYeatRevenue(Integer.parseInt(year));
+                double yearRevenue = dao.getYearRevenue(Integer.parseInt(year));
                 request.setAttribute("YEARREVENUE", yearRevenue);
                 rd.forward(request, response);
             } else if (day == null || day.equals("")) {

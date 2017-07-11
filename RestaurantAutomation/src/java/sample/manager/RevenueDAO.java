@@ -120,7 +120,7 @@ public class RevenueDAO implements Serializable {
         return list;
     }
     
-    public double getYeatRevenue(int year) throws NamingException, SQLException {
+    public double getYearRevenue(int year) throws NamingException, SQLException {
         double revenue = 0;
         ResultSet rs2;
         CallableStatement stm2;
