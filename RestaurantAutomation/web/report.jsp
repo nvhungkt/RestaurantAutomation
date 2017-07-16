@@ -35,8 +35,8 @@
             <ul class="pagination">
                 <li><a href="RevenueServlet">Revenue Report</a></li>
                 <li><a href="StaffReportServlet">Efficiency Report</a></li>
-                <li><a href="ReportServlet?reportAction=Time">Time Report</a></li>
-                <li><a href="ReportServlet?reportAction=Menu">Menu Report</a></li>
+                <li><a href="TimeReportServlet">Time Report</a></li>
+                <li><a href="MenuReportServlet">Menu Report</a></li>
             </ul>
             <br/>
             

@@ -88,6 +88,14 @@
         <servlet-name>StaffReportServlet</servlet-name>
         <servlet-class>sample.servlet.StaffReportServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TimeReportServlet</servlet-name>
+        <servlet-class>sample.manager.timereport.TimeReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MenuReportServlet</servlet-name>
+        <servlet-class>sample.manager.menureport.MenuReportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MiddleServlet</servlet-name>
         <url-pattern>/MiddleServlet</url-pattern>
@@ -175,6 +183,14 @@
     <servlet-mapping>
         <servlet-name>StaffReportServlet</servlet-name>
         <url-pattern>/StaffReportServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimeReportServlet</servlet-name>
+        <url-pattern>/TimeReportServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MenuReportServlet</servlet-name>
+        <url-pattern>/MenuReportServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

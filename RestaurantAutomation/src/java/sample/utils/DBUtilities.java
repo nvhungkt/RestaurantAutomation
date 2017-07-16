@@ -31,7 +31,7 @@ public class DBUtilities implements Serializable{
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String url = "jdbc:sqlserver://localhost:1433;databaseName=AutomationRestaurant;";
-            con = DriverManager.getConnection(url, "sa", "721997nam");
+            con = DriverManager.getConnection(url, "sa", "");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DBUtilities.class.getName()).log(Level.SEVERE, null, ex);
         }
